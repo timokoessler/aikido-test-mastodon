@@ -18,6 +18,9 @@ require 'active_job/railtie'
 # Used to be implicitly required in action_mailbox/engine
 require 'mail'
 
+require 'aikido-zen'
+Aikido::Zen.protect!
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
