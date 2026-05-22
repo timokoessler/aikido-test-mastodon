@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   before_action :require_functional!, if: :user_signed_in?
 
   before_action :set_cache_control_defaults
+  before_action :set_aikido_zen_user
 
   skip_before_action :verify_authenticity_token, only: :raise_not_found
 
@@ -38,6 +39,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_aikido_zen_user
+    return unless user_signed_in?
+
+    Aikido::Zen.set_user(
+      id: current_user.id,
+      name: current_user.account&.username
+    )
+  end
 
   def public_fetch_mode?
     !authorized_fetch_mode?
